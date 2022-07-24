@@ -5,6 +5,17 @@
 API документация доступна по ссылке (создана с помощью redoc):
 [http://127.0.0.1/redoc/](http://127.0.0.1/redoc/)
 ## Запуск проекта в Docker контейнере
+* Cоздайте файл `.env` корневой в директории с содержанием:
+```
+SECRET_KEY = ${django-secret-key}
+ALLOWED_HOSTS = ${localhost 127.0.0.1}
+DB_ENGINE = django.db.backends.postgresql
+DB_NAME = postgres
+POSTGRES_USER = postgres
+POSTGRES_PASSWORD = postgres
+DB_HOST = db
+DB_PORT = 5432
+```
 * Установите Docker
 * Параметры запуска описаны в файлах `docker-compose.yml`
 * Запустите docker compose:
@@ -47,7 +58,7 @@ python -m venv env
 ```bash
 source env/bin/activate
 ```
-* Cоздайте файл `.env` в корневой директории с содержанием:
+* Cоздайте файл `.env` корневой в директории с содержанием:
 ```
 SECRET_KEY = ${django-secret-key}
 ALLOWED_HOSTS = ${localhost 127.0.0.1}
