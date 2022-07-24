@@ -2,6 +2,7 @@ import re
 
 from djoser.views import UserViewSet
 from rest_framework import status
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -28,7 +29,7 @@ class LogsViewSet(APIView):
             number = int(self.request.data['message'].split(' ')[1])
             data = Logs.objects.filter(name=user)[:number]
             return Response(
-                data.values("message", "pub_date"),
+                data.values("id", "message", "pub_date"),
                 status=status.HTTP_200_OK
             )
         else:
@@ -41,15 +42,14 @@ class LogsViewSet(APIView):
                 status=status.HTTP_201_CREATED
             )
 
-    def delete(self, request, *args, **kwargs):
-        username = self.request.data['name']
+    def delete(self, request, pk, *args, **kwargs):
         user = self.request.user
-        if user.username != username:
+        log = get_object_or_404(Logs, pk=pk)
+        if user.id != log.name.id:
             return Response(
                 {'detail': 'Невозможно удалить запись от имени другого пользователя'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        log = Logs.objects.filter(name=user)
         if log:
             log.delete()
             return Response(
