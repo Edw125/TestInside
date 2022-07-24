@@ -20,25 +20,11 @@ DB_PORT = 5432
 * Параметры запуска описаны в файлах `docker-compose.yml`
 * Запустите docker compose:
 ```bash
-docker-compose up -d --build
-```  
-
+docker-compose up
+```
   > После сборки появятся 2 контейнера:
   > 1. контейнер базы данных **db**
   > 2. контейнер приложения **test_inside**
-
-* Примените миграции:
-```bash
-docker-compose exec test_inside python manage.py migrate
-```
-* Создайте администратора:
-```bash
-docker-compose exec backend python manage.py createsuperuser
-```
-* Соберите статику:
-```bash
-docker-compose exec backend python manage.py collectstatic --noinput
-```
 * Дополнительные команды очистки докера:
 ```bash
 docker stop $(docker ps -aq) && docker rm $(docker ps -aq)

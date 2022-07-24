@@ -10,8 +10,8 @@ services:
 
   test_inside:
     image: edw125/test_inside:latest
-    expose:
-      - 8000
+    ports:
+      - "8000:8000"
     restart: always
     volumes:
       - static_value:/app/static/
