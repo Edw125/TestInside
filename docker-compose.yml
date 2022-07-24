@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - /var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+  test_inside:
+    image: edw125/test_inside:latest
+    expose:
+      - 8000
+    restart: always
+    volumes:
+      - static_value:/app/static/
+      - media_value:/app/media/
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+volumes:
+  static_value:
+  media_value:
