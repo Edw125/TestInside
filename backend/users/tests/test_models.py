@@ -1,9 +1,9 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 
 from users.models import User, Logs
 
 
-class ModelTests(TestCase):
+class ModelTests(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

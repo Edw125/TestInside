@@ -45,4 +45,4 @@ class CustomUserSerializer(UserSerializer):
             'username',
             'first_name',
             'last_name',
-            )
+        )

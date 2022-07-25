@@ -2,7 +2,6 @@ import re
 
 from djoser.views import UserViewSet
 from rest_framework import status
-from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -16,6 +15,20 @@ from users.models import User, Logs
 class LogsViewSet(APIView):
     serializer_class = LogsSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+        data = Logs.objects.filter(name=user)
+        if data:
+            return Response(
+                data.values("id", "message", "pub_date"),
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response(
+                {'detail': 'Записей не существует'},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
     def post(self, request, *args, **kwargs):
         username = self.request.data['name']
@@ -44,22 +57,24 @@ class LogsViewSet(APIView):
 
     def delete(self, request, pk, *args, **kwargs):
         user = self.request.user
-        log = get_object_or_404(Logs, pk=pk)
-        if user.id != log.name.id:
+        try:
+            log = Logs.objects.get(pk=pk)
+            if user.id != log.name.id:
+                return Response(
+                    {'detail': 'Невозможно удалить запись от имени другого пользователя'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            if log:
+                log.delete()
+                return Response(
+                    {'detail': 'Запись удалена'},
+                    status=status.HTTP_204_NO_CONTENT
+                )
+        except Logs.DoesNotExist:
             return Response(
-                {'detail': 'Невозможно удалить запись от имени другого пользователя'},
-                status=status.HTTP_400_BAD_REQUEST
+                {'detail': 'Записи не существует'},
+                status=status.HTTP_404_NOT_FOUND
             )
-        if log:
-            log.delete()
-            return Response(
-                {'detail': 'Запись удалена'},
-                status=status.HTTP_204_NO_CONTENT
-            )
-        return Response(
-            {'error': 'Записи не существует'},
-            status=status.HTTP_400_BAD_REQUEST
-        )
 
 
 class CustomUserViewSet(UserViewSet):
