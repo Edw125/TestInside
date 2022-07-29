@@ -20,6 +20,22 @@ docker stop $(docker ps -aq) && docker rm $(docker ps -aq)
 docker rmi $(docker images -a -q)
 docker volume prune
 ```
+## Примеры запросов
+* POST запрос на endpoint users/logs/
+```bash
+{
+    name:       "имя отправителя",
+    message:    "текст сообщение"
+}
+```
+Или запрос, которым можно получить историю сообщений, где 10 кол-во сообщений
+```bash
+{
+    name:       "имя отправителя",
+    message:    "history 10"
+}
+```
+
 ## Установка проекта локально
 * Склонировать репозиторий и перейти в него в командной строке:
 ```bash
