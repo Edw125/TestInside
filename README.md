@@ -1,21 +1,10 @@
 # Inside
 ## Описание проекта
-Тестовый проект
+Тестовый проект. Результаты тестирования доступны в файле img.png, а тестовые команды лежат в файле curl.sh
 ## Документация к API
 API документация доступна по ссылке (создана с помощью redoc):
 [http://127.0.0.1/redoc/](http://127.0.0.1/redoc/)
 ## Запуск проекта в Docker контейнере
-* Cоздайте файл `.env` корневой в директории с содержанием:
-```
-SECRET_KEY = ${django-secret-key}
-ALLOWED_HOSTS = ${localhost 127.0.0.1}
-DB_ENGINE = django.db.backends.postgresql
-DB_NAME = postgres
-POSTGRES_USER = postgres
-POSTGRES_PASSWORD = postgres
-DB_HOST = db
-DB_PORT = 5432
-```
 * Установите Docker
 * Параметры запуска описаны в файлах `docker-compose.yml`
 * Запустите docker compose:
