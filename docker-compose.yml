@@ -5,6 +5,8 @@ services:
     image: postgres:13-alpine
     volumes:
       - /var/lib/postgresql/data/
+    env_file:
+      - ./.env
 
   test_inside:
     image: edw125/test_inside:latest
@@ -16,6 +18,8 @@ services:
       - media_value:/app/media/
     depends_on:
       - db
+    env_file:
+      - ./.env
 
 volumes:
   static_value:
