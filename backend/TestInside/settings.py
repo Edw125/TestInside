@@ -1,12 +1,12 @@
 import os
 from datetime import timedelta
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from pathlib import Path
 
-# load_dotenv()
-# env_path = Path('.') / '.env'
-# load_dotenv(dotenv_path=env_path)
+load_dotenv()
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 
 VALUE_DISPLAY = '-пусто-'
 
@@ -17,19 +17,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@)qpg$$9wzoc0&256lt2qc1_a%^l)lj&b^+52j3dddq3hc5)_e'
+SECRET_KEY = os.getenv(
+    'SECRET_KEY',
+    default='django-insecure-@)qpg$$9wzoc0&256lt2qc1_a%^l)lj&b^+52j3dddq3hc5)_e')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'testserver']
-
-DB_ENGINE = 'django.db.backends.postgresql'
-DB_NAME = 'postgres'
-POSTGRES_USER = 'postgres'
-POSTGRES_PASSWORD = 'postgres'
-DB_HOST = 'db'
-DB_PORT = '5432'
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
 
 # Application definition
 INSTALLED_APPS = [
